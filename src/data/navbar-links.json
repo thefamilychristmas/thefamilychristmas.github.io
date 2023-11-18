@@ -1,0 +1,17 @@
+[
+    {
+        "name": "Wishlists",
+        "url": "wishlist",
+        "element": "wishlist-view"
+    },
+    {
+        "name": "Menu",
+        "url": "menu",
+        "element": "menu-view"
+    },
+    {
+        "name": "Location",
+        "url": "locations",
+        "element": "locations-view"
+    }
+]
