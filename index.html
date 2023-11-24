@@ -1,34 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Family Christmas 2023" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta name="theme-color" content="#fff" />
-    <title>The Family Christmas 2023</title>
+<head>
+  <title>Family Christmas</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <script src="./js/bootstrap.min.js"></script>
+  <script> $(function(){
+    $("#footer").load("footer.html");
+  });
+</script>
+  <style>
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&display=swap" rel="stylesheet">
-    <base href="/" />
-    <style>
-      body {
-        overflow-x: hidden;
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        width: 100vw;
-      }
-    </style>
+    body {
+      background-image: url("images/background.png");
+      background-repeat:repeat;
+    }
+
+    .image{
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+    }
+    .col-sm-3{
+      user-select: none;
+      cursor: pointer;
+      height: 300px;
+      margin: 15px 0;
+    }
+    .image-name{
+      top: 100px;
+      position: absolute;
+      font-size: 72px;
+      color: white;
+      width: calc(100% - 30px);
+      background-color: rgba(0,0,0,0.4);
+    }
+    .countdown-container{
+      text-align: center;
+    }
+    .gift-value{
+      -webkit-animation-name: blinker;
+      -webkit-animation-iteration-count: infinite;
+      -webkit-animation-timing-function: cubic-bezier(.5, 0, 1, 1);
+      -webkit-animation-duration: 0.7s;
+    }
+    @-webkit-keyframes blinker {
+      from { opacity: 1.0; }
+      to { opacity: 0.0; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+        </button>
+        <a class="navbar-brand" href="#"></a>
+      </div>
+      
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="local.html">Location</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<div class="alert alert-danger countdown-container" role="alert" style="margin: 10px;">
+  <p class="gift-value"><b id="giftVar"></b></p>
+</div>
+
+<div class="alert alert-success countdown-container" role="alert" style="margin: 10px;">
+  <p class="countdown-title"><b id="christmasVar"></b></p><span id="countdown"></span>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div style="display:flex; justify-content: space-between;">
+          <h3 class="modal-title" id="modal-title"></h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          </div>
+      </div>
+      <div id="modal-body" class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  //Global variables
+  let cdDate = ''
+
+
+  // Dynamic Name Setters
+  async function onLoad(){
+    const response = await fetch('/data/variables.json')
+    const data = await response.json()
+
+    document.getElementById('giftVar').innerText = data.giftAlert
+    document.getElementById('christmasVar').innerText = data.christmasAlertHeader
+    document.getElementById('countdown').innerText = data.christmasAlertCountdown
+    cdDate = data.countdownDate
     
-    <script type="module">
-      import './src/main.js'
-      document.innerHTML = '<app-main></app-main>'
-    </script>
-  </head>
+    startCountdown()
+  }
+  onLoad()
+  // Countdown
+  
+  function startCountdown(){
+    let countDownDate = new Date(cdDate).getTime();
 
-  <body>
-    <app-main style="display:block; width: 100vw; height: 100vh"></app-main>
-  </body>
-</html>
+    let x = setInterval(function() {
+        let now = new Date().getTime();
+        let distance = countDownDate - now;
+
+        let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`
+
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("countdown").innerHTML = "EXPIRED";
+        }
+    }, 1000);
+  }
+  // Build's Wishlist
+  async function buildWishlist() {
+    const response = await fetch('/data/wishlist.json');
+    const data = await response.json();
+
+    data.forEach(person => {
+        const div = document.createElement('div');
+        div.className = 'col-sm-3';
+
+        const a = document.createElement('a');
+        a.dataset.toggle = 'modal';
+        a.dataset.target = '#exampleModalLong';
+        a.addEventListener('click', event => openModal(event, person));
+
+        const name = document.createElement('p');
+        name.className = 'image-name';
+        name.innerText = person.name;
+
+        const img = document.createElement('img');
+        img.src = `images/bg_${Math.floor(Math.random() * 10) + 1}.jpg`;
+        img.className = 'img-responsive image';
+
+        a.append(name, img);
+        div.append(a);
+
+        document.getElementById('container').append(div);
+    });
+}
+  buildWishlist()
+
+  function openModal(event, person) {
+    const modalTitle = document.getElementById('modal-title');
+    modalTitle.innerText = `${person.name}'s Wishlist`;
+
+    const wishlistText = person.wishlist.map(item => `${item} <br><br>`).join('');
+    document.getElementById('modal-body').innerHTML = wishlistText;
+}
+</script>
+
+
+<div class="container-fluid bg-3 text-center" id="container"></div>
+</body>
