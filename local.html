@@ -1,54 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Location</title>
+  <title>Family Christmas - Location</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/common.css">
+  <script src="./js/bootstrap.min.js"></script>
+
   <style>
-    /* Remove the navbar's default margin-bottom and rounded borders */ 
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-    }
-    
-    /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }
+    .table-dark{
+        margin-top: 20px;
+        color: white;
+        background-color: rgba(0,0,0,0.8);
+        border-radius: 10px;
+        text-align: left;
+        overflow: hidden;
+        text-align: center;
+        padding: 0 20px 20px 20px;
+      }
   </style>
 </head>
 <body>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+        </button>
+        <a class="navbar-brand" href="#"></a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li class="active"><a href="local.html">Location</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#"><span class="glyphicon glyphicon-log-in"></span></a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="#"></a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="menu.html">Menu</a></li>
-        <li class="active"><a href="local.html">Location</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span></a></li>
-      </ul>
-    </div>
+  <div class="container table-dark">
+    <h1 id="header"></h1>
+    <div><span>Place: </span> <span id="place"></span></div>
+    <div><span>Date: </span> <span id="date"></span></div>
+    <div><span>Time: </span> <span id="time"></span></div>
   </div>
-</nav>
+</body>
 
-    <center><h1>Location</h1></center>
-   <center><img src="images/christmashouse.jpg" height="250px"></center>  <br>
+<script>
+  // Dynamic Name Setters
+  async function onLoad(){
+    const response = await fetch('/data/location.json')
+    const data = await response.json()
 
-<center><h3> Jeannie & Velda's </h3> </center>
-<center><h3> Date: December 24, 2023</h3> </center>
-<center><h3> Time: 1:00 P.M.</h3> </center>
+    document.getElementById('header').innerText = data.header
+    document.getElementById('place').innerText = data.place
+    document.getElementById('date').innerText = data.date
+    document.getElementById('time').innerText = data.time
+  }
+  onLoad()
+      
+</script>
