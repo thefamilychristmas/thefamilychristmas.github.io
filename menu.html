@@ -1,26 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Christmas Menu</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <style>
-    /* Remove the navbar's default margin-bottom and rounded borders */ 
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-    }
-    
-    /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }
-  </style>
-</head>
+  <head>
+    <title>Family Christmas - Menu</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <script src="./js/bootstrap.min.js"></script>
+  </script>
+    <style>
+      .navbar {
+        margin-bottom: 0;
+        border-radius: 0;
+      }
+  
+      body {
+        text-align: center;
+        background-image: url("images/background.png");
+        background-repeat:repeat;
+      }
+      #header{
+        margin: 20px 0 0 0;
+        color: white;
+        background-color: rgba(0,0,0,0.8);
+        border-radius: 10px 10px 0 0;
+        padding: 20px;
+      }
+  
+      #image{
+        width: 100%;
+        height: auto;
+        max-width: 500px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+      }
+      .table-dark{
+        background-color: rgba(0,0,0,0.8);
+        border-radius: 0 0 10px 10px;
+        color: white;
+        text-align: left;
+        overflow: hidden;
+      }
+    </style>
+  </head>
 <body>
 
 <nav class="navbar navbar-inverse">
@@ -45,18 +67,46 @@
     </div>
   </div>
 </nav>
-<br>
-<center><h1>Christmas Dinner Menu</h1></center>
-<center><img src="images/christmasdinner.jpg" height="350px"></center> <br>
+
+<div class="container">
+  <h1 id="header"></h1>
+  <table class="table table-dark">
+    <thead>
+      <tr style="border-bottom: 3px solid gray;">
+        <th scope="col" id="column1Header">Menu Item</th>
+        <th scope="col" id="column2Header">Who's Bringing</th>
+      </tr>
+    </thead>
+    <tbody id="table-body"></tbody>
+  </table>
+</div>
   
-  <center><h3>&bull;Brisket - Flora</h3></center>
-  <center><h3>&bull;Ham - Dale </h3></center>
-  <center><h3>&bull;Potato Salad - Jeannie  </h3></center>
-  <center><h3>&bull;Buns & Rolls - Dale  </h3></center>
-  <center><h3>&bull;Relish Tray -  Jeannie</h3></center>
-  <center><h3>&bull;Baked Beans -Myrna </h3></center>
-  <center><h3>&bull;Pecan Pie - Flora</h3></center>
-  <center><h3>&bull;Peach Cobbler - Flora </h3></center>
-  <center><h3>&bull;Banana Pudding - Dale </h3></center>
-  <center><h3>&bull;Drinks & Ice - Myrna </h3></center>
-  
+<script>
+  // Dynamic Name Setters
+  async function onLoad(){
+    const response = await fetch('/data/menu.json')
+    const data = await response.json()
+
+    document.getElementById('header').innerText = data.menuHeader
+    document.getElementById('column1Header').innerText = data.column1Header
+    document.getElementById('column2Header').innerText = data.column2Header
+
+    data.menu.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.style.cssText = 'border-bottom: 2px solid gray;'
+        
+        const th = document.createElement('th');
+        th.setAttribute('scope', 'row')
+        th.innerText = row.food
+
+        const td = document.createElement('td')
+        td.innerText = row.person
+
+        tr.append(th, td)
+        
+        document.getElementById('table-body').append(tr)
+    });
+  }
+  onLoad()
+      
+</script>

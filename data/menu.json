@@ -1,0 +1,12 @@
+{
+    "menuHeader": "Christmas Dinner Menu",
+    "menuImage" : "images/christmasdinner.jpg",
+    "column1Header" : "Menu Item",
+    "column2Header" : "Who's Bringing",
+    "menu": [
+        {
+            "food": "Coming",
+            "person": "Soon"
+        }
+    ]
+}
