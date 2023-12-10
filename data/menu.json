@@ -5,8 +5,44 @@
     "column2Header" : "Who's Bringing",
     "menu": [
         {
-            "food": "Coming",
-            "person": "Soon"
+            "food": "Smoked Chicken, Ham, and Brisket",
+            "person": "Jeannie and Flora",
+        },
+        {
+            "food": "Green Beans",
+            "person": "Sheila",
+        },
+        {
+            "food": "Potato Salad",
+            "person": "Jeannie",
+        },
+        {
+            "food": "Corn",
+            "person": "Dale",
+        },
+        {
+            "food": "Rolls",
+            "person": "Sheila",
+        },
+        {
+            "food": "Pecan Pie",
+            "person": "Sheila",
+        },
+        {
+            "food": "Apple Pie",
+            "person": "",
+        },
+        {
+            "food": "Peach Cobbler",
+            "person": "",
+        },
+        {
+            "food": "Banana Pudding",
+            "person": "Dale",
+        },
+        {
+            "food": "Drinks & Ice",
+            "person": "Jamie & Cameron",
         }
     ]
 }
