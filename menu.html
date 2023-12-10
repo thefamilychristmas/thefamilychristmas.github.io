@@ -11,6 +11,7 @@
   </script>
     <style>
       #header{
+        text-align: center;
         margin: 20px 0 0 0;
         color: white;
         background-color: rgba(0,0,0,0.8);
@@ -84,12 +85,12 @@
         const tr = document.createElement('tr');
         tr.style.cssText = 'border-bottom: 2px solid gray;'
         
-        const th = document.createElement('th');
-        th.setAttribute('scope', 'row')
-        th.innerText = row.food
+        const food = document.createElement('td');
+        food.setAttribute('scope', 'row')
+        food.innerText = row.food
 
-        const td = document.createElement('td')
-        td.innerText = row.person
+        const person = document.createElement('td')
+        person.innerText = row.person
 
         tr.append(th, td)
         
